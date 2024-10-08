@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inheritances</title>
+    <script>
+        class Movie {
+            constructor() 
+            {
+                this.Movie_Name = '';
+                this.type = [];
+                this.director = '';
+                this.producer = '';
+                this.actor = '';
+                this.actress = '';
+                this.ticket_price = 0;
+            }
+
+            startMovie() {
+                console.log('Movie Name: ', this.Movie_Name);
+                console.log(`Movie Type: ${this.type}`);
+                console.log('Director: ', this.director);
+                console.log('Producer: ', this.producer);
+                console.log('Actor: ', this.actor);
+                console.log('Actress: ', this.actress);
+                console.log('Ticket Price: ', this.ticket_price);
+            }
+
+            stopMovie(callback) {
+                let time = 0;
+                const increment = 10;
+
+                let intervalId = setInterval(() => {
+                    time += increment;
+                    console.log(`${time} minutes`);
+
+                    if (time === 120) 
+                    {
+                        clearInterval(intervalId);
+                        console.log(`Movie: ${this.Movie_Name} has ended after 120 minutes.`);
+                       
+                        // Start the next movie after 120 minutes
+                        if (callback) {
+                            callback(); 
+                        }
+                    }
+                }, 1000); 
+            }
+        }
+
+        class Movie1 extends Movie {
+            constructor(Movie_Name, type, director, producer, actor, actress, ticket_price) {
+                super();
+                this.Movie_Name = Movie_Name;
+                this.type = type;
+                this.director = director;
+                this.producer = producer;
+                this.actor = actor;
+                this.actress = actress;
+                this.ticket_price = ticket_price;
+                this.movie1();
+            }
+
+            movie1() {
+                console.log('Movie 1 is starting in 5 seconds...');
+                setTimeout(() => {
+                    this.startMovie();
+                    this.stopMovie(() => {
+                        obj2.movie2(); // Start Movie 2 after Movie 1 ends
+                    });
+                }, 5000);
+            }
+        }
+
+        class Movie2 extends Movie {
+            constructor(Movie_Name, type, director, producer, actor, actress, ticket_price) {
+                super();
+                this.Movie_Name = Movie_Name;
+                this.type = type;
+                this.director = director;
+                this.producer = producer;
+                this.actor = actor;
+                this.actress = actress;
+                this.ticket_price = ticket_price;
+            }
+
+            movie2() {
+                console.log('.........................................');
+                console.log('Movie 2 is starting in 5 seconds...');
+                setTimeout(() => {
+                    this.startMovie();
+                    this.stopMovie(); 
+                }, 5000);
+            }
+        }
+
+        const obj1 = new Movie1('Jay Ho', ['Comedy', 'Romance', 'Suspense'], 'Sohel Khan', 'Arbaaz Khan', 'Salman Khan', 'Daisy Shah', 300);
+        const obj2 = new Movie2('Sahoo', ['Action', 'Love', 'Suspense'], 'A-Director', 'B-Producer', 'Prabhas', 'Shraddha Kapoor', 350);
+    </script>
+</head>
+<body>
+    <h2>Inheritances</h2>
+</body>
+</html>
